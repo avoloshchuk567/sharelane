@@ -3,10 +3,9 @@ package signUpTesting;
 import org.openqa.selenium.*;
 import org.testng.annotations.*;
 import utils.DriverSetUp;
-import org.testng.*;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 
 public class VerifySignUpLink extends DriverSetUp {
 
