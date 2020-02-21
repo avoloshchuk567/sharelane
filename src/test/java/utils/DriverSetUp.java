@@ -1,5 +1,6 @@
 package utils;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
@@ -28,11 +29,13 @@ public class DriverSetUp {
     }
 
     @BeforeClass
+    @Step("Open browser")
     public void openBrowser() {
         driver.get("https://www.sharelane.com/cgi-bin/main.py");
     }
 
     @AfterClass
+    @Step("Close browser")
     public void quitBrowser() {
         driver.quit();
     }

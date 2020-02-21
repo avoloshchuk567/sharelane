@@ -4,7 +4,7 @@
 <suite name="sharelaneTesting">
     <test name="signUpLinkTest">
         <classes>
-            <class name="signUpTesting.VerifySignUpLinkPresent"/>
+            <class name="signUpTesting.VerifySignUpLink"/>
         </classes>
     </test>
 </suite>
