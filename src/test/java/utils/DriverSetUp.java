@@ -1,31 +1,50 @@
 package utils;
 
-import org.openqa.selenium.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
 import java.io.*;
 import java.util.Properties;
 
 public class DriverSetUp {
-    protected WebDriver driver;
-    private String filePath = new File("src/test/resources/app.properties").getAbsolutePath();
-    private Properties appProps = new Properties();
+    private static final Logger LOGGER
+            = LoggerFactory.getLogger(DriverSetUp.class);
     private static final String MAIN_PAGE = "/cgi-bin/main.py";
+    private String relativeFilePath = "src/test/resources/app.properties";
+    private String absoluteFilePath = new String();
+    private Properties appProps = new Properties();
+    protected WebDriver driver;
+
+    private void getAbsoluteFilePath() {
+        try {
+            absoluteFilePath = new File(relativeFilePath).getAbsolutePath();
+        } catch (NullPointerException e) {
+            LOGGER.error("Impossible to create absolute file path", e.getMessage());
+        }
+    }
 
     private void loadPropertiesFromFile() {
-        try (InputStream input = new FileInputStream(filePath)) {
+        getAbsoluteFilePath();
+        try (InputStream input = new FileInputStream(absoluteFilePath)) {
             appProps.load(input);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.error("File not found", e.getMessage());
         }
     }
 
     @BeforeSuite
     public void setChromeDriver() {
-        loadPropertiesFromFile();
-        System.setProperty(appProps.getProperty("chromeDriver"), new File(appProps.getProperty("chromeDriverPath")).getAbsolutePath());
+        //loadPropertiesFromFile();
+//            String chromeDriverAbsolutePath = new File(System.getProperty("user.home") + appProps.getProperty("chromeDriverPath")).toString();
+//            System.setProperty(appProps.getProperty("chromeDriver"), chromeDriverAbsolutePath);
+//            driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @BeforeClass
@@ -38,5 +57,4 @@ public class DriverSetUp {
     public void quitBrowser() {
         driver.quit();
     }
-
 }

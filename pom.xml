@@ -15,7 +15,10 @@
         <testngVersion>6.14.3</testngVersion>
         <maven.compiler.target>1.10</maven.compiler.target>
         <maven.compiler.source>1.10</maven.compiler.source>
-        <hamcrestAll>1.3</hamcrestAll>
+        <hamcrestAllVersion>1.3</hamcrestAllVersion>
+        <logbackVersion>1.2.3</logbackVersion>
+        <mavenSurefirePluginVersion>3.0.0-M4</mavenSurefirePluginVersion>
+        <webdrivermanagerVersion>3.8.1</webdrivermanagerVersion>
     </properties>
 
     <dependencies>
@@ -34,6 +37,13 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanagerVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testngVersion}</version>
@@ -43,9 +53,30 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrestAll}</version>
+            <version>${hamcrestAllVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logbackVersion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${mavenSurefirePluginVersion}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
