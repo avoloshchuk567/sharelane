@@ -1,5 +1,6 @@
 package signUpTesting;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +14,20 @@ public class VerifySignUpLink extends DriverSetUp {
     private static final Logger LOGGER
             = LoggerFactory.getLogger(VerifySignUpLink.class);
 
-    @Test()
+    @Test(description = "Verification of 'Sign up' link presence")
+    @Description("Test description: check that 'Sign up' link is present")
+    @Step("Check that 'Sign up' link is present")
     public void verifySignUpLinkPresent() {
         LOGGER.info("Test: verifySignUpLinkPresent");
         driver.findElement(By.xpath("//a[text()='Sign up']")).isDisplayed();
     }
 
-    @Test
-    public void verifySignUpLinkCorrectTitle() {
-        LOGGER.info("Test: verifySignUpLinkCorrectTitle");
-        String signUpLink = driver.findElement(By.xpath("//a[text()='Sign up']")).getText();
-        assertThat(signUpLink, equalTo("Sign up"));
+    @Test(description = "Verification of 'Sign up' link text ", dependsOnMethods = {"verifySignUpLinkPresent"})
+    @Description("Test description: check that 'Sign up' link text is correct")
+    @Step("Check that 'Sign up' link text is correct")
+    public void verifySignUpLinkTextIsCorrect() {
+        LOGGER.info("Test: verifySignUpLinkTextIsCorrect");
+        String signUpLinkText = driver.findElement(By.xpath("//a[text()='Sign up']")).getText();
+        assertThat(signUpLinkText, equalTo("Sign up"));
     }
 }

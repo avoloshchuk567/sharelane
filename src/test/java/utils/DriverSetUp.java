@@ -1,5 +1,7 @@
 package utils;
 
+import io.qameta.allure.*;
+import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -48,12 +50,14 @@ public class DriverSetUp {
     }
 
     @BeforeClass
+    @Step("Load Main page")
     public void loadMainPage() {
         loadPropertiesFromFile();
         driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
     }
 
     @AfterClass
+    @Step("Close browser")
     public void quitBrowser() {
         driver.quit();
     }
