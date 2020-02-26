@@ -17,7 +17,7 @@
         <maven.compiler.source>1.10</maven.compiler.source>
         <allureTestngVersion>2.13.1</allureTestngVersion>
         <mavenSurefirePluginVersion>3.0.0-M4</mavenSurefirePluginVersion>
-        <aspectj.version>1.9.5</aspectj.version>
+        <aspectjVersion>1.9.5</aspectjVersion>
         <hamcrestAllVersion>1.3</hamcrestAllVersion>
         <logbackVersion>1.2.3</logbackVersion>
         <mavenSurefirePluginVersion>3.0.0-M4</mavenSurefirePluginVersion>
@@ -86,7 +86,7 @@
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectjVersion}/aspectjweaver-${aspectjVersion}.jar"
                     </argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
@@ -94,7 +94,7 @@
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
+                        <version>${aspectjVersion}</version>
                     </dependency>
                 </dependencies>
             </plugin>
