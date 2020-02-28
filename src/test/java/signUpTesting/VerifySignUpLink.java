@@ -14,7 +14,7 @@ public class VerifySignUpLink extends DriverSetUp {
     private static final Logger LOGGER
             = LoggerFactory.getLogger(VerifySignUpLink.class);
 
-    @Test(description = "Verification of 'Sign up' link presence")
+    @Test(enabled = false, description = "Verification of 'Sign up' link presence")
     @Description("Test description: check that 'Sign up' link is present")
     @Step("Check that 'Sign up' link is present")
     public void verifySignUpLinkPresent() {
@@ -22,7 +22,7 @@ public class VerifySignUpLink extends DriverSetUp {
         driver.findElement(By.xpath("//a[text()='Sign up']")).isDisplayed();
     }
 
-    @Test(description = "Verification of 'Sign up' link text ", dependsOnMethods = {"verifySignUpLinkPresent"})
+    @Test(enabled = false, description = "Verification of 'Sign up' link text ", dependsOnMethods = {"verifySignUpLinkPresent"})
     @Description("Test description: check that 'Sign up' link text is correct")
     @Step("Check that 'Sign up' link text is correct")
     public void verifySignUpLinkTextIsCorrect() {

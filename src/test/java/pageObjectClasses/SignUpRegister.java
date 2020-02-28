@@ -1,13 +1,17 @@
 package pageObjectClasses;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SignUpRegister {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SignUpRegister.class);
     WebDriver driver;
 
     public SignUpRegister(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
     @FindBy(xpath = "//p[text()='First Name* ']")
@@ -58,13 +62,18 @@ public class SignUpRegister {
         return this;
     }
 
-    public AccountCreated register(String firstName, String lastName, String email, String password1, String password2) {
+    public void clickRegisterButton(){
+        registerButton.click();
+    }
+
+    public CreatedUserAccount register(String firstName, String lastName, String email, String password1, String password2) {
         this.typeFirstName(firstName);
         this.typeLastName(lastName);
         this.typeEmail(email);
         this.typePassword(password1);
         this.typeConfirmPassword(password2);
-        registerButton.click();
-        return new AccountCreated(driver);
+        this.clickRegisterButton();
+        LOGGER.debug("FirstName {}, LastName {}, Email {}, Password {}, ConfirmPassword {}", firstName, lastName, email, password1, password2);
+        return new CreatedUserAccount(driver);
     }
 }

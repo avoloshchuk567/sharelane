@@ -1,8 +1,7 @@
 package utils;
 
-import io.qameta.allure.*;
-import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
@@ -10,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DriverSetUp {
     private static final Logger LOGGER
@@ -38,25 +38,18 @@ public class DriverSetUp {
         }
     }
 
-    @BeforeSuite
-    public void setChromeDriver() {
-        //loadPropertiesFromFile();
-//            String chromeDriverAbsolutePath = new File(System.getProperty("user.home") + appProps.getProperty("chromeDriverPath")).toString();
-//            System.setProperty(appProps.getProperty("chromeDriver"), chromeDriverAbsolutePath);
-//            driver = new ChromeDriver();
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-    }
-
-    @BeforeClass
+    @BeforeMethod
     @Step("Load Main page")
     public void loadMainPage() {
         loadPropertiesFromFile();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
     }
 
-    @AfterClass
+    @AfterMethod
     @Step("Close browser")
     public void quitBrowser() {
         driver.quit();

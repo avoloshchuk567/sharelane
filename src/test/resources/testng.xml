@@ -2,7 +2,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="sharelaneTesting">
-    <test name="signUpLinkTest">
+    <test name="pageObjectTest">
+        <classes>
+            <class name="pageObjectTests.MainPageTest"/>
+        </classes>
+    </test>
+    <test name="otherTest">
         <classes>
             <class name="signUpTesting.VerifySignUpLink"/>
         </classes>
