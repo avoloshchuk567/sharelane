@@ -38,7 +38,7 @@ public class SignUpRegister {
     private WebElement registerButton;
 
     public SignUpRegister typeFirstName(String firstName) {
-        firstNameFieldInput.sendKeys(firstName);
+        this.firstNameFieldInput.sendKeys(firstName);
         return this;
     }
 

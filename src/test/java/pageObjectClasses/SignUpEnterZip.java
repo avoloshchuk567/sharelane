@@ -20,7 +20,7 @@ public class SignUpEnterZip {
     private WebElement zipFieldInput;
     @FindBy(css = "input[value='Continue']")
     private WebElement continueButton;
-    @FindBy (css = "tr[class='grey_bg'] > td > p > b")
+    @FindBy(css = "tr[class='grey_bg'] > td > p > b")
     private WebElement signUpText;
 
     public SignUpEnterZip typeZip(String zip) {
@@ -39,7 +39,7 @@ public class SignUpEnterZip {
         return new SignUpRegister(driver);
     }
 
-    public String getSignUpText(){
-       return signUpText.getText();
+    public String getSignUpText() {
+        return signUpText.getText();
     }
 }

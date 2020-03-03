@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
+import pageObjectClasses.MainPage;
 
 import java.io.*;
 import java.util.*;
@@ -38,19 +39,18 @@ public class DriverSetUp {
         }
     }
 
-    @BeforeMethod
     @Step("Load Main page")
-    public void loadMainPage() {
+    public MainPage loadMainPage() {
         loadPropertiesFromFile();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
+        return new MainPage(driver);
     }
 
     @AfterMethod
-    @Step("Close browser")
     public void quitBrowser() {
         driver.quit();
     }

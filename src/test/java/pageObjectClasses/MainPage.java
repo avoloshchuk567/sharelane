@@ -1,9 +1,8 @@
 package pageObjectClasses;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import io.qameta.allure.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +14,16 @@ public class MainPage {
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png", fileExtension = ".png")
+    public byte[] takeElementScreenshotPNG(WebElement element) {
+        return element.getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png", fileExtension = ".png")
+    public byte[] takeWholePageScreenshotPNG(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
     @FindBy(xpath = "//p[text()='Email ']")
@@ -32,23 +41,27 @@ public class MainPage {
     @FindBy(css = "span[class ='user']")
     private WebElement helloText;
 
+    @Step("Entered email: {}")
     public MainPage typeEmail(String email) {
         emailFieldInput.sendKeys(email);
         return this;
     }
 
+    @Step("Entered password: {}")
     public MainPage typePassword(String password) {
         passwordFieldInput.sendKeys(password);
         return this;
     }
 
-    public void clickLogInButton(){
+    @Step("Click Login button")
+    public void clickLogInButton() {
         loginButton.click();
     }
 
     public LoginPage loginIntoAccount(String email, String password) {
         this.typeEmail(email);
         this.typePassword(password);
+        takeWholePageScreenshotPNG(driver);
         LOGGER.debug("Email: {}, Password: {}", email, password);
         this.clickLogInButton();
         return new LoginPage(driver);
@@ -61,14 +74,16 @@ public class MainPage {
     }
 
     public String getEmailFieldText() {
+        takeElementScreenshotPNG(emailField);
         return emailField.getText();
     }
 
     public String getPasswordFieldText() {
+        takeElementScreenshotPNG(passwordField);
         return passwordField.getText();
     }
 
-    public String getHelloText(){
+    public String getHelloText() {
         return helloText.getText();
     }
 }
