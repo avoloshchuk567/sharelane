@@ -1,5 +1,6 @@
 package pageObjectClasses;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.*;
@@ -21,18 +22,22 @@ public class CreatedUserAccount {
     @FindBy(css = "a[href*='./main.py']")
     private WebElement homePage;
 
+    @Step("User Email is created ")
     public String getUserAccountEmail() {
         return userAccountEmail.getText();
     }
 
+    @Step("User Password is created ")
     public String getUserAccountPassword() {
         return userAccountPassword.getText();
     }
 
+    @Step("Get \"Account is created!\" text")
     public String getSuccessfulRegisterText() {
         return confirmationMessage.getText();
     }
 
+    @Step("Return to Home page")
     public void returnHomePage() {
         homePage.click();
     }

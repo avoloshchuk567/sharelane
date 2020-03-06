@@ -31,8 +31,7 @@ public class MainPageTest extends DriverSetUp {
 
     @Step("Test user is created")
     public void createTestUser() {
-        mainPage = loadMainPage();
-        createdUser = mainPage.clickSignUpLink().continueRegistration("12345")
+        createdUser = loadMainPage().clickSignUpLink().continueRegistration("12345")
                 .register("John", "Smith", "john.smith@test.com", "12345", "12345");
         createdUserEmail = createdUser.getUserAccountEmail();
         createdUserPassword = createdUser.getUserAccountPassword();
@@ -45,17 +44,13 @@ public class MainPageTest extends DriverSetUp {
     @Test(description = "Test of Email text on Main page")
     @Description("Test description: check that email text is correct")
     public void checkEmailTextIsCorrectTest() {
-        mainPage = loadMainPage();
-        String emailText = mainPage.getEmailFieldText();
-        assertThat(emailText, equalTo("Email"));
+        assertThat(loadMainPage().getEmailFieldText(), equalTo("Email"));
     }
 
     @Test(description = "Test of Password text on Main page")
     @Description("Test description: check that password text is correct")
     public void checkPasswordTextIsCorrectTest() {
-        mainPage = loadMainPage();
-        String passwordText = mainPage.getPasswordFieldText();
-        assertThat(passwordText, equalTo("Password"));
+        assertThat(loadMainPage().getPasswordFieldText(), equalTo("Password"));
     }
 
     @DataProvider
@@ -73,20 +68,16 @@ public class MainPageTest extends DriverSetUp {
     @Test(dataProvider = "loginFailData", description = "Invalid login test")
     @Description("Test description: it's impossible to login with invalid data")
     public void loginFailTest(String email, String password, String testDescription) {
-        mainPage = loadMainPage();
-        LoginPage loginPage = mainPage.loginIntoAccount(email, password);
+        LoginPage loginPage = loadMainPage().loginIntoAccount(email, password);
         takeWholePageScreenshotPNG(driver);
         LOGGER.debug("Invalid login with email: {}, password: {}", email, password);
-        String errorMessage = loginPage.getErrorMessageText();
-        assertThat(errorMessage, equalTo("Oops, error. Email and/or password don't match our records"));
+        assertThat(loginPage.getErrorMessageText(), equalTo("Oops, error. Email and/or password don't match our records"));
     }
 
     @Test(description = "Sign up link works correctly")
     @Description("Test description: check that it's possible to sign up")
     public void itsPossibleToSignUpTest() {
-        mainPage = loadMainPage();
-        SignUpEnterZip signUpEnterZip = mainPage.clickSignUpLink();
-        assertThat(signUpEnterZip.getSignUpText(), equalTo("Sign Up"));
+        assertThat(loadMainPage().clickSignUpLink().getSignUpText(), equalTo("Sign Up"));
     }
 
     @Test(description = "Valid login test")
@@ -97,8 +88,7 @@ public class MainPageTest extends DriverSetUp {
         mainPage = loadMainPage();
         mainPage.loginIntoAccount(createdUserEmail, createdUserPassword);
         LOGGER.debug("Logged into account with email: {}, password: {}", createdUserEmail, createdUserPassword);
-        String helloMessage = mainPage.getHelloText();
         takeWholePageScreenshotPNG(driver);
-        assertThat(helloMessage, containsString("Hello"));
+        assertThat(mainPage.getHelloText(), containsString("Hello"));
     }
 }

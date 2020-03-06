@@ -1,5 +1,6 @@
 package pageObjectClasses;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 import org.slf4j.Logger;
@@ -23,11 +24,13 @@ public class SignUpEnterZip {
     @FindBy(css = "tr[class='grey_bg'] > td > p > b")
     private WebElement signUpText;
 
+    @Step("Sign up with zip: {0}")
     public SignUpEnterZip typeZip(String zip) {
         zipFieldInput.sendKeys(zip);
         return this;
     }
 
+    @Step("Click Continue button")
     public void clickContinueButton() {
         continueButton.click();
     }

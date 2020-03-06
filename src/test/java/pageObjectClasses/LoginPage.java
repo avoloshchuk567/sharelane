@@ -1,5 +1,6 @@
 package pageObjectClasses;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.*;
@@ -15,6 +16,7 @@ public class LoginPage {
     @FindBy(css = ".error_message")
     private WebElement errorMessageText;
 
+    @Step("Get error message text: \"Oops, error. Email and/or password don't match our records\" ")
     public String getErrorMessageText() {
         return errorMessageText.getText();
     }

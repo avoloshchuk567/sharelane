@@ -41,13 +41,13 @@ public class MainPage {
     @FindBy(css = "span[class ='user']")
     private WebElement helloText;
 
-    @Step("Entered email: {}")
+    @Step("Enter email:")
     public MainPage typeEmail(String email) {
         emailFieldInput.sendKeys(email);
         return this;
     }
 
-    @Step("Entered password: {}")
+    @Step("Enter password:")
     public MainPage typePassword(String password) {
         passwordFieldInput.sendKeys(password);
         return this;
@@ -67,22 +67,26 @@ public class MainPage {
         return new LoginPage(driver);
     }
 
+    @Step("Click \'Sign up\' link")
     public SignUpEnterZip clickSignUpLink() {
         signUpLink.click();
         LOGGER.debug("Sign Up link is clicked");
         return new SignUpEnterZip(driver);
     }
 
+    @Step("Get \'Email\' field text")
     public String getEmailFieldText() {
         takeElementScreenshotPNG(emailField);
         return emailField.getText();
     }
 
+    @Step("Get \'Password\' field text")
     public String getPasswordFieldText() {
         takeElementScreenshotPNG(passwordField);
         return passwordField.getText();
     }
 
+    @Step("Check that logged user is greeted with \"Hello ...\" text")
     public String getHelloText() {
         return helloText.getText();
     }

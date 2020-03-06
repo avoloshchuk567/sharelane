@@ -1,5 +1,6 @@
 package pageObjectClasses;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 import org.slf4j.Logger;
@@ -37,32 +38,38 @@ public class SignUpRegister {
     @FindBy(css = "input[value=Register]")
     private WebElement registerButton;
 
+    @Step("Type First Name {0}")
     public SignUpRegister typeFirstName(String firstName) {
         this.firstNameFieldInput.sendKeys(firstName);
         return this;
     }
 
+    @Step("Type Last Name {0}")
     public SignUpRegister typeLastName(String lastName) {
         lastNameFieldInput.sendKeys(lastName);
         return this;
     }
 
+    @Step("Type Email {0}")
     public SignUpRegister typeEmail(String email) {
         emailFieldInput.sendKeys(email);
         return this;
     }
 
+    @Step("Type Password {0}")
     public SignUpRegister typePassword(String password1) {
         passwordFieldInput.sendKeys(password1);
         return this;
     }
 
+    @Step("Confirm Password {0}")
     public SignUpRegister typeConfirmPassword(String password2) {
         confirmPasswordFieldInput.sendKeys(password2);
         return this;
     }
 
-    public void clickRegisterButton(){
+    @Step("Click Register button")
+    public void clickRegisterButton() {
         registerButton.click();
     }
 
