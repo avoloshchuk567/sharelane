@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="sharelaneTesting">
+    <test name="pageObjectTest">
+        <classes>
+            <class name="pageObjectTests.MainPageTest"/>
+        </classes>
+    </test>
+    <test name="otherTest">
+        <classes>
+            <class name="signUpTesting.VerifySignUpLink"/>
+        </classes>
+    </test>
+</suite>
