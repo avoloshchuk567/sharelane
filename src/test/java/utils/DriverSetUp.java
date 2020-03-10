@@ -50,6 +50,16 @@ public class DriverSetUp {
         return new MainPage(driver);
     }
 
+    public MainPage loadMainPageForInvalidLogin() {
+        loadPropertiesFromFile();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
+        return new MainPage(driver);
+    }
+
     @AfterMethod
     public void quitBrowser() {
         driver.quit();

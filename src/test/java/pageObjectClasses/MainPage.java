@@ -69,6 +69,13 @@ public class MainPage {
 
     @Step("Click \'Sign up\' link")
     public SignUpEnterZip clickSignUpLink() {
+        takeElementScreenshotPNG(signUpLink);
+        signUpLink.click();
+        LOGGER.debug("Sign Up link is clicked");
+        return new SignUpEnterZip(driver);
+    }
+
+    public SignUpEnterZip clickSignUpLinkForInvalidLogin() {
         signUpLink.click();
         LOGGER.debug("Sign Up link is clicked");
         return new SignUpEnterZip(driver);

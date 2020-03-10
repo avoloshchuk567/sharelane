@@ -27,8 +27,16 @@ public class CreatedUserAccount {
         return userAccountEmail.getText();
     }
 
+    public String getUserAccountEmailForFailedLogin() {
+        return userAccountEmail.getText();
+    }
+
     @Step("User Password is created ")
     public String getUserAccountPassword() {
+        return userAccountPassword.getText();
+    }
+
+    public String getUserAccountPasswordForFailedLogin() {
         return userAccountPassword.getText();
     }
 

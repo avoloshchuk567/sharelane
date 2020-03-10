@@ -44,8 +44,18 @@ public class SignUpRegister {
         return this;
     }
 
+    public SignUpRegister typeFirstNameForFailedLogin(String firstName) {
+        this.firstNameFieldInput.sendKeys(firstName);
+        return this;
+    }
+
     @Step("Type Last Name {0}")
     public SignUpRegister typeLastName(String lastName) {
+        lastNameFieldInput.sendKeys(lastName);
+        return this;
+    }
+
+    public SignUpRegister typeLastNameForFailedLogin(String lastName) {
         lastNameFieldInput.sendKeys(lastName);
         return this;
     }
@@ -56,8 +66,18 @@ public class SignUpRegister {
         return this;
     }
 
+    public SignUpRegister typeEmailForFailedLogin(String email) {
+        emailFieldInput.sendKeys(email);
+        return this;
+    }
+
     @Step("Type Password {0}")
     public SignUpRegister typePassword(String password1) {
+        passwordFieldInput.sendKeys(password1);
+        return this;
+    }
+
+    public SignUpRegister typePasswordForFailedLogin(String password1) {
         passwordFieldInput.sendKeys(password1);
         return this;
     }
@@ -68,8 +88,17 @@ public class SignUpRegister {
         return this;
     }
 
+    public SignUpRegister typeConfirmPasswordForFailedLogin(String password2) {
+        confirmPasswordFieldInput.sendKeys(password2);
+        return this;
+    }
+
     @Step("Click Register button")
     public void clickRegisterButton() {
+        registerButton.click();
+    }
+
+    public void clickRegisterButtonForFailedLogin() {
         registerButton.click();
     }
 
@@ -80,6 +109,17 @@ public class SignUpRegister {
         this.typePassword(password1);
         this.typeConfirmPassword(password2);
         this.clickRegisterButton();
+        LOGGER.debug("FirstName {}, LastName {}, Email {}, Password {}, ConfirmPassword {}", firstName, lastName, email, password1, password2);
+        return new CreatedUserAccount(driver);
+    }
+
+    public CreatedUserAccount registerForFailedLogin(String firstName, String lastName, String email, String password1, String password2) {
+        this.typeFirstNameForFailedLogin(firstName);
+        this.typeLastNameForFailedLogin(lastName);
+        this.typeEmailForFailedLogin(email);
+        this.typePasswordForFailedLogin(password1);
+        this.typeConfirmPasswordForFailedLogin(password2);
+        this.clickRegisterButtonForFailedLogin();
         LOGGER.debug("FirstName {}, LastName {}, Email {}, Password {}, ConfirmPassword {}", firstName, lastName, email, password1, password2);
         return new CreatedUserAccount(driver);
     }

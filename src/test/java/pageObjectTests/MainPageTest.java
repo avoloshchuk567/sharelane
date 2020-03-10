@@ -2,6 +2,7 @@ package pageObjectTests;
 
 import io.qameta.allure.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
@@ -30,13 +31,22 @@ public class MainPageTest extends DriverSetUp {
     }
 
     @Step("Test user is created")
-    public void createTestUser() {
+    public void createTestUserForSuccessfulLogin() {
         createdUser = loadMainPage().clickSignUpLink().continueRegistration("12345")
                 .register("John", "Smith", "john.smith@test.com", "12345", "12345");
         createdUserEmail = createdUser.getUserAccountEmail();
         createdUserPassword = createdUser.getUserAccountPassword();
         attachTxt("Created user email: " + createdUserEmail + " \n" + "Created user password: " + createdUserPassword);
         takeWholePageScreenshotPNG(driver);
+        LOGGER.info("User is created with email = {}, password = {}", createdUserEmail, createdUserPassword);
+        driver.quit();
+    }
+
+    public void createTestUserForInvalidLogin() {
+        createdUser = loadMainPageForInvalidLogin().clickSignUpLinkForInvalidLogin().continueRegistrationForInvalidLogin("12345")
+                .registerForFailedLogin("John", "Smith", "john.smith@test.com", "12345", "12345");
+        createdUserEmail = createdUser.getUserAccountEmailForFailedLogin();
+        createdUserPassword = createdUser.getUserAccountPasswordForFailedLogin();
         LOGGER.info("User is created with email = {}, password = {}", createdUserEmail, createdUserPassword);
         driver.quit();
     }
@@ -55,7 +65,7 @@ public class MainPageTest extends DriverSetUp {
 
     @DataProvider
     public Object[][] loginFailData() {
-        this.createTestUser();
+        this.createTestUserForInvalidLogin();
         return new Object[][]{
                 {"", "", "checkLoginWithEmptyFields"},
                 {createdUserEmail, "", "checkLoginWithEmptyPassword"},
@@ -83,11 +93,13 @@ public class MainPageTest extends DriverSetUp {
     @Test(description = "Valid login test")
     @Description("Test description: it's possible to login with valid data")
     public void successfulLoginTest() {
-        this.createTestUser();
+        this.createTestUserForSuccessfulLogin();
         //attach   > add text attachment
         mainPage = loadMainPage();
         mainPage.loginIntoAccount(createdUserEmail, createdUserPassword);
         LOGGER.debug("Logged into account with email: {}, password: {}", createdUserEmail, createdUserPassword);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 5);
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span[class ='user']")));
         takeWholePageScreenshotPNG(driver);
         assertThat(mainPage.getHelloText(), containsString("Hello"));
     }

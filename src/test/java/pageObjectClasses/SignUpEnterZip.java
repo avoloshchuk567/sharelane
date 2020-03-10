@@ -30,14 +30,30 @@ public class SignUpEnterZip {
         return this;
     }
 
+    public SignUpEnterZip typeZipForInvalidLogin(String zip) {
+        zipFieldInput.sendKeys(zip);
+        return this;
+    }
+
     @Step("Click Continue button")
     public void clickContinueButton() {
+        continueButton.click();
+    }
+
+    public void clickContinueButtonForInvalidLogin() {
         continueButton.click();
     }
 
     public SignUpRegister continueRegistration(String zip) {
         this.typeZip(zip);
         this.clickContinueButton();
+        LOGGER.debug("ZIP code {}", zip);
+        return new SignUpRegister(driver);
+    }
+
+    public SignUpRegister continueRegistrationForInvalidLogin(String zip) {
+        this.typeZipForInvalidLogin(zip);
+        this.clickContinueButtonForInvalidLogin();
         LOGGER.debug("ZIP code {}", zip);
         return new SignUpRegister(driver);
     }
