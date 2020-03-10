@@ -1,16 +1,17 @@
 package utils;
 
-import io.qameta.allure.*;
-import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
+import pageObjectClasses.MainPage;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DriverSetUp {
     private static final Logger LOGGER
@@ -38,26 +39,28 @@ public class DriverSetUp {
         }
     }
 
-    @BeforeSuite
-    public void setChromeDriver() {
-        //loadPropertiesFromFile();
-//            String chromeDriverAbsolutePath = new File(System.getProperty("user.home") + appProps.getProperty("chromeDriverPath")).toString();
-//            System.setProperty(appProps.getProperty("chromeDriver"), chromeDriverAbsolutePath);
-//            driver = new ChromeDriver();
+    @Step("Load Main page")
+    public MainPage loadMainPage() {
+        loadPropertiesFromFile();
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-    }
-
-    @BeforeClass
-    @Step("Load Main page")
-    public void loadMainPage() {
-        loadPropertiesFromFile();
         driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
+        return new MainPage(driver);
     }
 
-    @AfterClass
-    @Step("Close browser")
+    public MainPage loadMainPageForInvalidLogin() {
+        loadPropertiesFromFile();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get(appProps.getProperty("endpoint") + MAIN_PAGE);
+        return new MainPage(driver);
+    }
+
+    @AfterMethod
     public void quitBrowser() {
         driver.quit();
     }
